@@ -1,0 +1,26 @@
+\subsection{Constructors and Destructor}
+
+
+\subsubsection{Constructor}
+\indent This constructor is really simple. You don't need to do any logic, just
+use a member initializer list to initialize
+
+\subsubsection{Copy Constructor (own-type)}
+\indent This is the standard copy constructor. The function should loop through the
+instance passed in, pushing each element of the other onto the back of
+the one being constructed.
+
+\indent It should be done using the algorithm for (or directly calling) \cpp{push_back}
+so that all of the nodes are split correctly.
+
+\subsubsection{Copy Constructor (template)}
+\indent This copy constructor is algorithmically identical to the own-type
+constructor, but is templated to allow for a Lariat type instantiation
+with different parameters for \cpp{<T>} and \cpp{<Size>}.
+
+\indent Refer to the above guide to templates for details on how to write the
+function signature.
+
+\subsubsection{Destructor}
+The destructor is a simple, generic destructor. It's sole purpose is to
+free all the nodes in the linked list so there are no memory leaks.

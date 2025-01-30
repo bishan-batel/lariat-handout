@@ -1,17 +1,60 @@
 \documentclass{article}
 
+\usepackage{xcolor}
+\usepackage{listings}
+
+\usepackage{minted}
+
+\usepackage{xparse}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{braket}
+\usepackage{forloop}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{pdfpages}
+\usepackage[pdftex,pdfpagelabels,bookmarks,hyperindex,hyperfigures,hidelinks]{hyperref}
 \usepackage[backend=biber]{biblatex}
+\usepackage{etoolbox}
+\usepackage{nameref}
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\AtBeginEnvironment{quote}{\par\singlespacing\small}
+
+\newcommand{\cpp}[1]{{\mintinline{cpp}{#1}}}
+\newcommand*{\fullref}[1]{\hyperref[{#1}]{\nameref*{#1} (\ref*{#1})}}
+
+\lstset{language=C++,keywordstyle={\bfseries \color{CornflowerBlue}}}
+\usemintedstyle{vs}
+
+\theoremstyle{plain}
+\newtheorem{assumption}{Assumption}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newtheorem{lemma}{Lemma}
+
+\input{preamble.sty}
+
 \addbibresource{references.bib}
+
+\title{CS280 Assignment - Lariat}
+\date{ }
+\author{Luke Cardell, slightly modified by Dmitri Volper}
 
 \begin{document}
 
-\title{My Article}
-\author{Me}
-\date{1970-01-01}
 \maketitle
 
-\cite{key}
 
-\printbibliography
+\pagebreak
+\tableofcontents
+\pagebreak
+
+\include{what.tex}
+\include{template_guide.tex}
+\include{details/index.tex}
+
 
 \end{document}

@@ -1,0 +1,112 @@
+\subsection{Data Structure Control}
+
+\subsubsection{\cpp{clear}}
+\indent This is a relatively simple function with a similar algorithm to the
+class destructor.
+
+\begin{itemize}
+	\item First, loop through the list, freeing each node in turn.
+	\item Once the list is empty, update the necessary member variables.
+\end{itemize}
+
+\subsection{\cpp{compact}}
+\indent Compact takes all the data stored in the linked list and moves it into the
+smallest number of nodes possible. Then it frees all empty nodes at the
+end of the list.
+
+The algorithm for this walks the list at two points in parallel. I will
+refer to the walker having elements shifted into it as the left foot and
+the walker reading through the elements to shift as the right foot.
+
+\begin{itemize}
+	\item First, loop through the list with both feet until the left node is not
+	      already full and the right foot hasn't walked off the list.
+	\item Next, walk through the list while the right foot hasn't lost the list.
+
+	\item This loop should first store the count of elements in the right node,
+	      then set the count of the right node to zero. This allows the left foot
+	      to update it as it is given elements to store.
+	\item This loop should have a nested loop that stores each value from the right
+	      foot in the left foot's node, and steps the left foot to the next node
+	      when it is filled.
+\end{itemize}
+
+
+\pagebreak
+
+\begin{verbatim}
+ ______________________________________  
+|.-KEY--------------------------------.| 
+|| [node]   [values]   [count]        || 
+||   |         |           |  [next]  || 
+||   v         v           v    |     || 
+||  +-+-node-------------+---+  v     || 
+||  |#|[_][_][_][_][_][_]|(_)| --->   || 
+||  +-+------------------+---+        || 
+||      0  1  2  3  4  5  <-[indices] || 
+||____________________________________|| 
+'--------------------------------------' 
+\end{verbatim}
+
+
+\begin{enumerate}
+
+	\item The starting position of the inner loop, transfering right's first
+	      element into left's fifth space
+
+	      \begin{verbatim}
+                                 [rpos = 0]                           
+                                     |                      [rtot = 3]
+ +-+-left-------------+---+      +-+-right------------+---+      +-+-...
+ |0|[a][b][c][d][_][_]|(4)| ---> |1|[e][f][g][_][_][_]|(0)| ---> |2|[...
+ +-+------------------+---+      +-+------------------+---+      +-+-...
+     0  1  2  3  4  5                0  1  2  3  4  5                 					
+			 \end{verbatim}
+
+
+	\item Next important point, the left foot is now full. Set the left foot
+	      to the next node in the list and continue the algorithm
+	      \begin{verbatim}
+                                       [rpos = 2]                     
+                                           |                [rtot = 3]
+ +-+-left-------------+---+      +-+-right------------+---+      +-+-...
+ |0|[a][b][c][d][e][f]|(6)| ---> |1|[_][_][g][_][_][_]|(0)| ---> |2|[... 
+ +-+------------------+---+      +-+------------------+---+      +-+-...				
+     0  1  2  3  4  5                0  1  2  3  4  5                 				
+			 \end{verbatim}
+
+
+	\item Left and right feet are now standing on the same node, but the
+	      algorithm still works because it is based on index in the node
+	      rather than the node itself.
+	      \begin{verbatim}
+        [rpos = 2]                                                     
+            |                                                [rtot = 3]
+  +-+-left/right-------+---+      +-+-right->next------+---+      +-+-... 
+  |1|[_][_][g][_][_][_]|(0)| ---> |2|[h][i][j][k][_][_]|(4)| ---> |3|[... 					
+  +-+------------------+---+      +-+------------------+---+      +-+-...					
+      0  1  2  3  4  5                0  1  2  3  4  5                 				
+		\end{verbatim}
+
+
+	      \pagebreak
+	\item The left foot has had the element at rpos shifted down, and the
+	      right foot has stepped to the next node. Note that rtot has been
+	      updated to 4, the right node has had its count zeroed out, and
+	      rtot has been updated to the right node's original count.
+
+
+	      \begin{verbatim}
+                                    [rpos = 1]                        				
+                                        |                   [rtot = 4]
+ +-+-left-------------+---+      +-+-right------------+---+      +-+-... 
+ |1|[g][h][_][_][_][_]|(2)| ---> |2|[_][i][j][k][_][_]|(0)| ---> |3|[...
+ +-+------------------+---+      +-+------------------+---+      +-+-...
+     0  1  2  3  4  5                0  1  2  3  4  5                 
+				\end{verbatim}
+
+
+\end{enumerate}
+
+Once the deque has been compacted, remove all the extra nodes from the
+end of the list.

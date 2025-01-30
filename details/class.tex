@@ -1,0 +1,56 @@
+\subsection{Lariat Class Details}
+
+
+\subsubsection{Template Parameters}
+\indent The \cpp{Lariat} class has two template parameters which are generally self-
+explanatory.
+\\
+
+\begin{tabular}{|c|c|}
+	\hline
+	\mintinline{cpp}{typename T} & The type of data being stored in the data structure \\
+	\hline
+	\mintinline{cpp}{int Size}   & The logical size of the arrays within the node      \\
+	\hline
+\end{tabular}
+
+
+
+\subsubsection{Member Variables}
+\indent The \cpp{Lariat} class provided by Volper has five member variables.
+\\
+
+
+\begin{tabular}{|c|c|}
+	\hline
+	\mintinline{cpp}{head_}      & A pointer to the first node in the linked list                       \\
+	\hline
+	\mintinline{cpp}{tail_}      & A pointer to the last node in the linked list                        \\
+	\hline
+	\mintinline{cpp}{size_}      & An integer for the total number of elements actively storing data    \\
+	\hline
+	\mintinline{cpp}{nodecount_} & An integer for the number of nodes in the linked list                \\
+	\hline
+	\mintinline{cpp}{asize_}     & An integer for the size of the array within each node                \\
+	                             & Interchangeable with the template parameter \mintinline{cpp}{<Size>} \\
+	\hline
+\end{tabular}
+
+
+\subsubsection{Member Type}
+
+\indent The \cpp{Lariat} class has one member type, the \cpp{LNode} struct used in the linked
+list internal implementation. \cpp{LNode} has four member variables of its own.
+\\
+
+\begin{tabular}{|c|c|}
+	\hline
+	\cpp{next}   & A pointer to the next node in the linked list                                \\
+	\hline
+	\cpp{prev}   & A pointer to the previous node in the linked list                            \\
+	\hline
+	\cpp{count}  & An integer to track of how many elements the \cpp{LNode} is actively storing \\
+	\hline
+	\cpp{values} & An array of \cpp{<Size>} elements of type \cpp{<T>}                          \\
+	\hline
+\end{tabular}

@@ -1,0 +1,182 @@
+\begin{section}{Luke's Guide to Templated Templates}
+
+ \begin{displayquote}
+	 "We put some templates in your templates so you could generate code at compile
+	 time while you generate code at compile time."
+	 -C++
+ \end{displayquote}
+
+ \indent A template is a section of code like any other that gets "written" at compile
+ time, rather than when you actually write templated code. In this sense,
+ writing a template is about using the compiler to your own advantage to avoid
+ doing unnecessary work.
+
+ \begin{displayquote}
+	 Laziness FTW
+ \end{displayquote}
+
+
+ A normal function template is declard as such:
+ \begin{minted}[autogobble]{cpp}
+		template<typename T>
+		void Foo(T bar);
+	\end{minted}
+
+ The definition requires knowledge of the template parameters in order to work:
+
+ \begin{minted}[autogobble]{cpp}
+		template<typename T>
+		void Foo<T>(T bar) {
+			//     |
+			//      `-[function template ]
+
+			//...
+		}
+	\end{minted}
+
+ \indent In the Lariat assignment, you will have to make a templated copy constructor
+ and assignment operator for the Lariat template class. This is similar to
+ writing a static function template, but it's written within another
+ encompassing template, the Lariat class in this case.
+
+ \indent The basic declaration of the function is just like a normal template
+ function, but within a class scope.
+
+ \begin{minted}[autogobble]{cpp}
+		template<typename T>
+		class Foo {
+			//...
+
+			template<typename Bar>
+			void Baz(Bar & qux);
+
+			//...
+		};
+	\end{minted}
+
+ \indent The definition of the function takes a little bit more work, which may be confusing at first.
+
+
+ \begin{minted}[autogobble]{cpp}
+    template<typename T>    // Gives the external class template information
+    template<typename Bar>  // Gives the internal function template information
+		void Foo<T>::Baz<Bar>(Bar & qux) {
+      // |          |
+      // |           `-[function signature]
+      //  `-[class namespace]
+
+      // ...
+    }
+ \end{minted}
+
+
+ \indent The first template declaration belongs to the class, which may be instantiated
+ multiple times with multiple name-mangled signatures based on the compiler's
+ implementation of templates.
+
+ \indent The second template declaration belongs to the function, which will likely be
+ instantiated multiple times for every single class instantiation. In this way
+ the structure resembles a tree:
+
+
+ \begin{figure}[h]
+	 \centering
+	 \begin{verbatim}
+										+-source------------------------------+
+										| original code written by programmer |
+										+-------------------------------------+
+											 /                               \
+					 +-class---------+                     +-class---------+
+					 | instantiation |                     | instantiation |
+					 | for type A    |                     | for type B    |
+					 +---------------+                     +---------------+
+					 /               \                     /               \
++-function------+ +-function------+      +-function------+ +-function------+
+| type A        | | type B        |      | type A        | | type B        |
+| instantiation | | instantiation |      | instantiation | | instantiation |
++---------------+ +---------------+      +---------------+ +---------------+
+	\end{verbatim}
+	 \caption{\#dat\_ascii}
+ \end{figure}
+
+
+
+ \pagebreak
+ \indent The next little template trick you might run into with this assignment comes
+ when you try to refer to internal member types in the instantiation of code.
+ I personally used this in my helper functions that returned pointers to nodes
+ in the list, but it's useful for any further template work you might be
+ interested in doing.
+
+ \indent Dependent types are also instantiated for ech class, with the exact same
+ process as function templates. This means that using just the internal name
+ in external code will lead to type confusion, where the compiler isn't sure
+ which owning class is being referred to.
+
+ \indent A class class template with a member type and a member function returning a
+ pointer to the member type:
+
+ \begin{minted}[autogobble]{cpp}
+    template<typename T>
+    class Foo {
+      //...
+
+      struct Bar {
+        //...
+      }
+
+      Bar * Baz();
+
+      //...
+    };
+ \end{minted}
+
+ The member function here must be defined as such:
+ \begin{minted}[autogobble]{cpp}
+
+    template<typename T>
+		typename Foo<T>::Bar * Foo<T>::Baz() {
+      // |       |    |       |     |
+      // |       |    |       |      `-[function signature]
+      // |       |    |        `-[class namespace]
+      // |       |     `-[member typename]
+      // |        `-[class namespace]
+      //  `-[declaration of token as user-defined type]
+
+      //...
+    }
+ \end{minted}
+
+ \pagebreak
+ \indent The last real trick I want to share with you pertains directly to the copy
+ constructors this assignment requires. At their instantiation, class templates
+ only have direct access to their own instatiation's member variable. This
+ means that in order to see another instantiation's private variables, there
+ must be a declaration of each instantiation as a friend.
+
+ \begin{displayquote}
+	 How do you make something to account for any scenario at compile time?
+
+	 Simple. More templates.
+
+	 Declare a friend class template in your original class template.
+
+	 \begin{minted}[autogobble]{cpp}
+    template<typename T>>
+    class Foo {
+      //...
+
+      template<typename U>  //[nested template declaration]
+      friend class Foo<U>;  //[friend declaration for class template]
+
+      //...
+    }
+	 \end{minted}
+ \end{displayquote}
+
+ \indent This has been my brief introduction to templates as they pertain to this
+ assignment. they may seem scary, but templates allow for a greater depth and
+ elegance of code, decreasing the total writing time and reducing the volume of
+ duplicated code.
+
+\end{section}

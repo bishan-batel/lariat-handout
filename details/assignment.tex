@@ -1,0 +1,11 @@
+\subsection{Assignment Operators}
+
+\subsubsection{\cpp{operator=} (own-type)}
+\indent This assignment operator generally works exactly the same as you might
+expect. Set the non-pointer members as necessary, clear this instance's
+data, then walk through the right-hand argument's list adding each
+element to this instance
+
+\subsubsection{\cpp{operator=} (template)}
+\indent This assignment operator follows the exact same algorithm as the own-type
+version, but is a nested template like I described above.

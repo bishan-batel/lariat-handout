@@ -1,0 +1,61 @@
+\subsection{Function Details}
+
+
+\indent Remember to check for null at any point you're dealing with pointers. In
+particular, make sure to check if the head and tail are null before you try
+to work with them. I find that not dereferencing null is generally the better
+programming practice.
+
+\indent Also remember to update the \cpp{size_} and \cpp{nodecount_} member variables where
+necessary.
+
+
+\begin{itemize}
+	\item Constructors and Destructor
+	      \begin{itemize}
+		      \item[-] ctor
+		      \item[-] copy ctor (own-type)
+		      \item[-] copy ctor (template)
+		      \item[-] dtor
+	      \end{itemize}
+	\item Assignment Operators
+	      \begin{itemize}
+		      \item[-] \cpp{operator=} (own-type)
+		      \item[-] \cpp{operator=} (template)
+	      \end{itemize}
+	\item Element Addition
+	      \begin{itemize}
+		      \item[-] \cpp{insert}
+		      \item[-] \cpp{push_back}
+		      \item[-] \cpp{push_front}
+	      \end{itemize}
+	\item Element Removal
+	      \begin{itemize}
+		      \item[-] \cpp{erase}
+		      \item[-] \cpp{pop_back}
+		      \item[-] \cpp{pop_front}
+	      \end{itemize}
+	\item Element Access
+	      \begin{itemize}
+		      \item[-] \cpp{operator[]}
+		      \item[-] \cpp{first}
+		      \item[-] \cpp{last}
+	      \end{itemize}
+	\item Data Structure Information
+	      \begin{itemize}
+		      \item[-] \cpp{find}
+		      \item[-] \cpp{size}
+	      \end{itemize}
+	\item Data Structure Control
+	      \begin{itemize}
+		      \item[-] \cpp{clear}
+		      \item[-] \cpp{compact}
+	      \end{itemize}
+	\item Recommended Helper Functions
+	      \begin{itemize}
+		      \item[-] \cpp{split}
+		      \item[-] \cpp{findElement}
+		      \item[-] \cpp{shiftUp}
+		      \item[-] \cpp{shiftDown}
+	      \end{itemize}
+\end{itemize}

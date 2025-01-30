@@ -1,0 +1,23 @@
+\subsection{Element Access}
+
+\indent As the const and non-const versions of these functions are algorithmically
+and syntactically identical, I would recommend (may Shilling forgive me)
+copy\/pasting the code from one to the other. You can't call one from inside
+the other, as that would violate the const requirements.
+
+\subsubsection{\cpp{operator[]}}
+Find the containing node and local index of the index passed in. Like
+insert and erase, this is easily done with the \cpp{findElement} helper
+function I detailed in \fullref{section:rec_helper}.
+
+Return the element at the local index of the containing node.
+
+\subsubsection{\cpp{first}}
+This is one of the easiest functions in this assignment.
+
+Return the first element of the head node.
+
+\subsubsection{\cpp{last}}
+This is also an easy function.
+
+Return the last element in the tail node.

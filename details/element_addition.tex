@@ -1,0 +1,122 @@
+\subsection{Element Addition}
+
+
+\subsubsection{\cpp{insert}}
+\label{func:insert}
+
+Insert an element into the data structure at the index, between the element
+at \cpp{[index - 1]} and the element at \cpp{[index]}
+The first thing to this function is to check for an Out of Bounds error. If
+the index is invalid, throw a \cpp{LariatException} with \cpp{E_BAD_INDEX} and the
+description "Subscript is out of range"
+Make sure to handle the "edge" cases, which allow for insertion at the end
+of the deque as well as the beginning. I personally suggest calling
+\cpp{push_back} and \cpp{push_front} in these cases, as it helps minimize the amount
+of code written and the algorithm is identical anyways.
+
+\indent The next thing to do is to set up the actual insertion algorithm.
+First, find the node and local index of the element being inserted. This
+can be done with the \cpp{findElement} helper function detailed in the
+Recommended Helper Functions section of this guide.
+
+Next, shift all elements past that local index one element to the right.
+This can be done with the \cpp{shiftUp} function detailed in \fullref{section:rec_helper}.
+
+\begin{minted}[autogobble]{cpp}
+      /*
+            [e]
+             |
+             v
+        +------------------+      (0) Starting position, inserting 'e' at
+        |[a][b][c][d][_][_]|          index 1 of the node
+        +-0--1--2--3--4--5-+
+
+            [e]
+             |
+             v
+        +------------------+      (1) Shift all elements right from index
+        |[a][_][b][c][d][_]|
+        +-0--1--2--3--4--5-+
+
+            [_]
+             |
+             v
+        +------------------+      (2) Set the newly open element to the value
+        |[a][e][b][c][d][_]|          being inserted, 'e' here
+        +-0--1--2--3--4--5-+
+      */
+\end{minted}
+
+
+\indent This should work for the most common use-case, but it will cause a
+problem if the node is full.
+
+If the node is full, you will need to keep track of the last element in
+the node before you shift all the elements to the right. Again, this is
+easy to do with the recommended helper function.
+I call this "popped off" element the overflow.
+
+\begin{minted}[autogobble]{cpp}
+      /*
+            [g]
+             |            [_]
+             v            /
+        +------------------+      (0) Starting position, inserting 'g' at
+        |[a][b][c][d][e][f]|          index 1 of a full node
+        +-0--1--2--3--4--5-+
+
+            [g]
+             |            [f] <-[overflow]
+             v            /
+        +------------------+      (1) Shift all elements right from index,
+        |[a][_][b][c][d][e]|          keeping track of the overflow, 'f' here
+        +-0--1--2--3--4--5-+
+
+            [_]
+             |            [f]
+             v            /
+        +------------------+      (2) Set the newly open element to the value
+        |[a][g][b][c][d][e]|          being inserted, 'g' here
+        +-0--1--2--3--4--5-+
+      */
+\end{minted}
+
+\indent Next, you will need to split the node.
+I would recommend writing a helper function for this algorithm as it
+will be used elsewhere. I have detailed the split algorithm in \fullref{section:rec_helper}.
+You will need to transfer the overflow to the last element of the new
+node created by the split. It is possible to put this part of the
+algorithm directly in the split function. I will not detail that in
+this guide, but rather leave it for you to discover on your own.
+Working out that algorithm will probably make your code much cleaner,
+so I would definitely recommend figuring it out.
+As the split algorithm accurately updates the node counts for the split
+nodes, the only thing left to do is increment the node count.
+
+
+
+
+\subsubsection{\cpp{push_back}}
+\indent This is an easy algorithm using the \cpp{split}  function (\ref{section:rec_helper}).
+
+\begin{itemize}
+	\item If the tail node is full, split the node and update the \cpp{tail_} pointer.
+	\item Set the last element in the tail's array to the value.
+	\item Increment the tail node's count.
+\end{itemize}
+
+\subsubsection{\cpp{push_front}}
+This algorithm is more similar to the \cpp{insert} function (\ref{func:insert}) than the \cpp{push_back}
+algorithm, but is still relatively simple.
+
+\begin{itemize}
+	\item If the head node is empty, increment the node's count.
+	\item If the head node is full, you will need to shift the elements up, in the
+	      same way they were shifted in the insert function, making sure to track the overflow.
+	\item Next you will need to split the node.
+	      In order to account for splitting the only node in the linked list, you
+	      will have to update the \cpp{tail_} pointer as necessary.
+	\item If the head node isn't full yet, just shift the head node up an element
+	      from element 0 and increase the count.
+	\item Set the 0'th element of the head to the value.
+\end{itemize}

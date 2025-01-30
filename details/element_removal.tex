@@ -1,0 +1,30 @@
+\subsection{Element Removal}
+
+
+\subsubsection{\cpp{erase}}
+
+This function uses the \cpp{findElement} helper function I have detailed in
+\fullref{section:rec_helper}. Having implemented that, the function itself is relatively simple.
+You can use the \cpp{pop_back} and \cpp{pop_front} functions if the index requested is
+the first or last element.
+
+
+\begin{itemize}
+	\item First, find the containing node and local index of the requested global
+	      index.
+	\item Shift all the elements in the node beyond the local index left one element,
+	      covering the element being erased. This is done with the \cpp{shiftDown}
+	      function detailed in \fullref{section:rec_helper}. Make sure
+	      to account for the node being only one element large.
+	\item Decrement the node's count.
+\end{itemize}
+
+
+\subsubsection{\cpp{pop_back}}
+Decrement the count of the tail node.
+
+\subsubsection{\cpp{pop_front}}
+Shift all elements in the head node down one element.
+Decrement the head's count.
+
+If the head node is now empty, free the associated memory.
