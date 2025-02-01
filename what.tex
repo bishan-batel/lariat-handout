@@ -10,21 +10,17 @@
 
  \indent The main goal is to have a more efficient (compared to array) insert in the
  middle.
- Reminder: if array (and consequently \mintinline{C++}{std::vector}) insert an element
+ Reminder: if array (and consequently \mintinline{cpp}{std::vector}) insert an element
  in the middle, all elements to the right of the insert position have to be
- shifted 1 position to the right to free a spot for new element. This is $O(N)$ (linear) operation. Another possible problem is if there is not anough space,
+ shifted 1 position to the right to free a spot for new element. This is $O(N)$ (linear) operation. Another possible problem is if there is not \uwave{anough}\footnote{enough} space,
  which will required reallocation if the whole array.
  Lariat solves the problem by storing small segments of contiguous memory non-contiguously.
 
 
- During insert one of $2$ things can happen (see datail later):
+ During insert one of $2$ things can happen (see \uwave{datail}\footnote{detail} later):
  \begin{itemize}
-	 \item the contiguous block may have extra space, so only some elements have to be shifted (\ref{fig:whatlariat1})
-	 \item block containing insert position is full, then we split it (\ref{fig:whatlariat2})
- \end{itemize}
-
- \begin{figure}[h]
-	 \begin{minted}{cpp}
+	 \item the contiguous block may have extra space, so only some elements have to be shifted
+	       \begin{minted}[autogobble]{cpp}
 //    0  1            2  3  4        // index
 // +------------+  +------------+
 // |  1  3     -|->|  4  5  6  -|->  // data
@@ -36,12 +32,9 @@
 // +------------+  +------------+  +------------+
 // only value 3 had to shifted
 	\end{minted}
-	 \caption{Block containing insert position has extra space}
-	 \label{fig:whatlariat1}
- \end{figure}
 
- \begin{figure}[h]
-	 \begin{minted}{cpp}
+	 \item block containing insert position is full, then we split it
+	       \begin{minted}[autogobble]{cpp}
 // insert 8 before 5
 // first split:
 //    0  1  2         3  4            5  6            6  7  8       
@@ -54,9 +47,8 @@
 // |  1  2  3  -|->|  4  8     -|->|  5  6     -|->|  9  9  9  -|->
 // +------------+  +------------+  +------------+  +------------+    
 // only values 5 and 6 were copied
-	\end{minted}
-	 \caption{Block containing the insert position is full}
-	 \label{fig:whatlariat2}
- \end{figure}
+			\end{minted}
+ \end{itemize}
+
 
 \end{section}

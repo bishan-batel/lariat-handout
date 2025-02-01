@@ -4,19 +4,17 @@
 \indent Remember to check for null at any point you're dealing with pointers. In
 particular, make sure to check if the head and tail are null before you try
 to work with them. I find that not dereferencing null is generally the better
-programming practice.
-
-\indent Also remember to update the \cpp{size_} and \cpp{nodecount_} member variables where
+programming practice. Also remember to update the \cpp{size_} and \cpp{nodecount_} member variables where
 necessary.
 
 
 \begin{itemize}
 	\item Constructors and Destructor
 	      \begin{itemize}
-		      \item[-] ctor
+		      \item[-] ctor\footnote{Constructor}
 		      \item[-] copy ctor (own-type)
 		      \item[-] copy ctor (template)
-		      \item[-] dtor
+		      \item[-] dtor\footnote{Destructor}
 	      \end{itemize}
 	\item Assignment Operators
 	      \begin{itemize}
@@ -46,6 +44,8 @@ necessary.
 		      \item[-] \cpp{find}
 		      \item[-] \cpp{size}
 	      \end{itemize}
+
+	      \pagebreak
 	\item Data Structure Control
 	      \begin{itemize}
 		      \item[-] \cpp{clear}

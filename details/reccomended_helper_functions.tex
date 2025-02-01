@@ -1,12 +1,136 @@
-\section{Recommended Helper Functions}
+\subsection{Recommended Helper Functions}
 \label{section:rec_helper}
 
 
-\subsubsection{\cpp{clear}}
-This is a relatively simple function with a similar algorithm to the
-class destructor.
+\subsubsection{\cpp{split}}
 
-\begin{itemize}
-	\item First, loop through the list, freeing each node in turn.
-	\item Once the list is empty, update the necessary member variables.
-\end{itemize}
+This helper function takes a full node and splits into two nodes of an
+aproximately equivalent number of elements.
+
+\begin{enumerate}
+	\item First, create a new node to split the original node into.
+
+	\item Calculate the index from which to move elements over from. This should
+	      account for an element being appended to the second node after the
+	      function has been called. If you're implementing this with overflow,
+	      you should have already worked out how the overflow gets assigned its
+	      position.
+
+	\item Loop through the elements from the index in the first node, transferring
+	      them each to the newly added node. Update the added node's count during
+	      the loop.
+
+	      \begin{minted}[autogobble]{cpp}
+				/*
+					(0) Initial state, with the full node that was passed in.
+
+					+-+-node----------+---+      +-+-
+					|#|[a][b][c][d][e]|(5)| ---> |#|[
+					+-+-0--1--2--3--4-+---+      +-+-
+
+					(1) The second node has been created and elements are being transferred
+					to it.
+
+					[index = 3]
+					|
+					+-+-node----------+---+      +-+-
+					|#|[a][b][c][d][e]|(5)| ---> |#|[
+					+-+-0--1--2--3--4-+---+      +-+-
+					________|
+					|
+					+-+-added---------+---+
+					|#|[_][_][_][_][_]|(0)| ---> [NULL]
+					+-+-0--1--2--3--4-+---+
+
+					(2) The elements have been transferred to the added node and the count of
+					the added node has been updated.
+
+					+-+-node----------+---+      +-+-
+					|#|[a][b][c][_][_]|(5)| ---> |#|[
+					+-+-0--1--2--3--4-+---+      +-+-
+
+					+-+-added---------+---+
+					|#|[d][e][_][_][_]|(2)| ---> [NULL]
+					+-+-0--1--2--3--4-+---+
+				*/
+		\end{minted}
+
+	\item Set the count of the original node to index, and insert the added node
+	      immediately after the original node.
+\end{enumerate}
+
+
+
+\subsubsection{\cpp{findElement}}
+
+\indent This function takes a global index to find in the deque and must return
+both a pointer to the node in the list and the local index of the element in the returned node.
+Clearly returning multiple variables is a  \textit{small} challenge in C and C++,
+so you will have to find a way to work around that.
+The algorithm for this function is focused around looping through the list
+and tracking the total number of elements stored before the current
+node. I used a counter and added each node's count until I passed the
+desired global index.
+
+\indent Because each node in the list only stores the number of elements it is
+using actively, the count of each has to be added individually to keep an
+accurate count of the number of elements that have been stepped over.
+
+
+\subsubsection{shiftUp}
+\indent This helper function is almost identical to one that was particularly
+useful for the CS170 Vector lab. It uses a simple swap algorithm to swap
+every element between the index and the last element in the node's array
+in place.
+
+\indent Make sure your bound-checking is good and you have accurately defined the
+limits of your memory. If you find a wrong value somewhere unexpected,
+you probably have the index limit wrong somehow.
+
+\pagebreak
+\begin{minted}[autogobble]{cpp}
+/*
+  (0) Initial state of the node passed in. Shifting everything right from
+      the third element.
+
+          [index = 2]
+               |
+       +-node----------------------+
+       |[a][b][c][d][e][f][g][h][i]|
+       +-0--1--2--3--4--5--6--7--8-+
+
+  (1) First pass of the loop, swapping the index with the loop count.
+
+    [index = 2]   [lc = 3]
+              \    /
+       +-node----------------------+
+       |[a][b][d][c][e][f][g][h][i]|
+       +-0--1--2--3--4--5--6--7--8-+
+
+  (2) Last pass of the loop, swapping the index with the last element.
+      Notice that the third element, the index, now holds the value that
+      would have been pushed off the end of the array. This is useful for
+      tracking the last element that would have been lost.
+
+    [index = 2]                  [lc = 3]
+              \                   /
+       +-node----------------------+
+       |[a][b][i][c][d][e][f][g][h]|
+       +-0--1--2--3--4--5--6--7--8-+
+                \
+               [overflow element]
+*/
+\end{minted}
+
+I would highly recommend writing a templatized swap function. It has uses
+in most basic algorithms related to data structures.
+
+
+\subsubsection{\cpp{shiftDown}}
+\indent The shift down helper function works very similarly to the shift up, by
+swapping values in the node's array.
+The key difference between the two is that the shift down function does
+not have a fixed index. It should move down the array, swapping each
+element with the element immediately before it. In this way, it still
+preserves the data it is writing over, but does so by shifting it from
+the start of the range to the end rather than the opposited direction.

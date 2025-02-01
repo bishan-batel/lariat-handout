@@ -12,11 +12,11 @@
  doing unnecessary work.
 
  \begin{displayquote}
-	 Laziness FTW
+	 Laziness FTW\footnote{For the Win}
  \end{displayquote}
 
 
- A normal function template is declard as such:
+ A normal function template is \spellerr{declard}{declared} as such:
  \begin{minted}[autogobble]{cpp}
 		template<typename T>
 		void Foo(T bar);
@@ -54,6 +54,7 @@
 		};
 	\end{minted}
 
+ \pagebreak
  \indent The definition of the function takes a little bit more work, which may be confusing at first.
 
 
@@ -108,7 +109,7 @@
  in the list, but it's useful for any further template work you might be
  interested in doing.
 
- \indent Dependent types are also instantiated for ech class, with the exact same
+ \indent Dependent types are also instantiated for \spellerr{ech}{each} class, with the exact same
  process as function templates. This means that using just the internal name
  in external code will lead to type confusion, where the compiler isn't sure
  which owning class is being referred to.
@@ -150,7 +151,7 @@
  \pagebreak
  \indent The last real trick I want to share with you pertains directly to the copy
  constructors this assignment requires. At their instantiation, class templates
- only have direct access to their own instatiation's member variable. This
+ only have direct access to their own \spellerr{instatiation's}{instantiation's} member variable. This
  means that in order to see another instantiation's private variables, there
  must be a declaration of each instantiation as a friend.
 

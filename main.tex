@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass{exam}
 
 \usepackage{xcolor}
 \usepackage{listings}
@@ -19,21 +19,20 @@
 \usepackage{etoolbox}
 \usepackage{nameref}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{ulem}
+\makeatletter
+\def\uwave{\bgroup \markoverwith{\lower3.5\p@\hbox{\sixly \textcolor{red}{\char58}}}\ULon}
+\font\sixly=lasy6 % does not re-load if already loaded, so no memory problem.
+\makeatother
+
 \AtBeginEnvironment{quote}{\par\singlespacing\small}
 
+\newcommand{\spellerr}[2]{{\uwave{#1}\footnote{#2}}}
 \newcommand{\cpp}[1]{{\mintinline{cpp}{#1}}}
 \newcommand*{\fullref}[1]{\hyperref[{#1}]{\nameref*{#1} (\ref*{#1})}}
 
 \lstset{language=C++,keywordstyle={\bfseries \color{CornflowerBlue}}}
 \usemintedstyle{vs}
-
-\theoremstyle{plain}
-\newtheorem{assumption}{Assumption}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
-
-\newtheorem{lemma}{Lemma}
 
 \input{preamble.sty}
 

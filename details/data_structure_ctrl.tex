@@ -9,7 +9,7 @@ class destructor.
 	\item Once the list is empty, update the necessary member variables.
 \end{itemize}
 
-\subsection{\cpp{compact}}
+\subsubsection{\cpp{compact}}
 \indent Compact takes all the data stored in the linked list and moves it into the
 smallest number of nodes possible. Then it frees all empty nodes at the
 end of the list.
@@ -31,8 +31,6 @@ the walker reading through the elements to shift as the right foot.
 	      when it is filled.
 \end{itemize}
 
-
-\pagebreak
 
 \begin{verbatim}
  ______________________________________  
@@ -89,7 +87,6 @@ the walker reading through the elements to shift as the right foot.
 		\end{verbatim}
 
 
-	      \pagebreak
 	\item The left foot has had the element at rpos shifted down, and the
 	      right foot has stepped to the next node. Note that rtot has been
 	      updated to 4, the right node has had its count zeroed out, and

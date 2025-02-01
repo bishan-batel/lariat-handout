@@ -4,7 +4,7 @@
 \subsubsection{\cpp{insert}}
 \label{func:insert}
 
-Insert an element into the data structure at the index, between the element
+\indent Insert an element into the data structure at the index, between the element
 at \cpp{[index - 1]} and the element at \cpp{[index]}
 The first thing to this function is to check for an Out of Bounds error. If
 the index is invalid, throw a \cpp{LariatException} with \cpp{E_BAD_INDEX} and the
@@ -13,7 +13,6 @@ Make sure to handle the "edge" cases, which allow for insertion at the end
 of the deque as well as the beginning. I personally suggest calling
 \cpp{push_back} and \cpp{push_front} in these cases, as it helps minimize the amount
 of code written and the algorithm is identical anyways.
-
 \indent The next thing to do is to set up the actual insertion algorithm.
 First, find the node and local index of the element being inserted. This
 can be done with the \cpp{findElement} helper function detailed in the
@@ -48,9 +47,10 @@ This can be done with the \cpp{shiftUp} function detailed in \fullref{section:re
 \end{minted}
 
 
+\pagebreak
+
 \indent This should work for the most common use-case, but it will cause a
 problem if the node is full.
-
 If the node is full, you will need to keep track of the last element in
 the node before you shift all the elements to the right. Again, this is
 easy to do with the recommended helper function.
@@ -105,6 +105,7 @@ nodes, the only thing left to do is increment the node count.
 	\item Increment the tail node's count.
 \end{itemize}
 
+\pagebreak
 \subsubsection{\cpp{push_front}}
 This algorithm is more similar to the \cpp{insert} function (\ref{func:insert}) than the \cpp{push_back}
 algorithm, but is still relatively simple.
