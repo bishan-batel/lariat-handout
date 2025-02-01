@@ -9,10 +9,11 @@ at \cpp{[index - 1]} and the element at \cpp{[index]}
 The first thing to this function is to check for an Out of Bounds error. If
 the index is invalid, throw a \cpp{LariatException} with \cpp{E_BAD_INDEX} and the
 description "Subscript is out of range"
-Make sure to handle the "edge" cases, which allow for insertion at the end
+Make sure to handle the "edge\footnote{\includegraphics[width=0.025\textwidth]{edge.jpg}}" cases, which allow for insertion at the end
 of the deque as well as the beginning. I personally suggest calling
 \cpp{push_back} and \cpp{push_front} in these cases, as it helps minimize the amount
 of code written and the algorithm is identical anyways.
+
 \indent The next thing to do is to set up the actual insertion algorithm.
 First, find the node and local index of the element being inserted. This
 can be done with the \cpp{findElement} helper function detailed in the

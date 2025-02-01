@@ -1,4 +1,4 @@
-\documentclass{exam}
+\documentclass{article}
 
 \usepackage{xcolor}
 \usepackage{listings}
@@ -19,6 +19,8 @@
 \usepackage{etoolbox}
 \usepackage{nameref}
 \usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{authblk}
+\usepackage{titlepic}
 \usepackage{ulem}
 \makeatletter
 \def\uwave{\bgroup \markoverwith{\lower3.5\p@\hbox{\sixly \textcolor{red}{\char58}}}\ULon}
@@ -40,7 +42,15 @@
 
 \title{CS280 Assignment - Lariat}
 \date{ }
-\author{Luke Cardell, slightly modified by Dmitri Volper}
+\author[1]{Luke Cardell}
+\author[2]{Slightly modified by Dmitri Volper}
+\author[3]{Translated to PDF by Kishan S Patel}
+\affil[1]{Digipen Institute of Technology}
+
+\newcommand{\volpy}[1]{{\includegraphics[width=#1\textwidth]{myman.png}}}
+\newcommand{\surprisevolpy}[0]{{\volpy{0.02}}}
+
+\titlepic{\volpy{0.3}}
 
 \begin{document}
 
